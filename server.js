@@ -17,6 +17,10 @@ app.get('/api/notes', (req, res) => {
     readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
 })
 
+app.get('*', (req, res) => {
+    res.sendFile(__dirname + "/public/index.html")
+})
+
 app.post('/api/notes', (req, res) => {
     if (req.body){
         let newNote = req.body
@@ -31,9 +35,7 @@ app.post('/api/notes', (req, res) => {
 app.delete('/api/notes/:id', (req, res) => {
     let id = req.params.id
     if (id){
-        
         readFromFile('./db/db.json').then((data) => {
-            console.log(req.params)
             let dbArray = JSON.parse(data)
             if (dbArray){
                 dbArray = dbArray.filter(obj => obj.id !== id)
