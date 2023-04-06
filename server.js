@@ -17,20 +17,33 @@ app.get('/api/notes', (req, res) => {
     readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
 })
 
-app.post('/api/notes', (req, res, next) => {
-    let newNote = req.body
-    newNote.id = uuid()
-    readAndAppend(newNote, './db/db.json')
-    next()
+app.post('/api/notes', (req, res) => {
+    if (req.body){
+        let newNote = req.body
+        newNote.id = uuid()
+        readAndAppend(newNote, './db/db.json')
+        res.send('Note Added!')
+    }else{
+        res.send('Error Adding Note!')
+    }
 })
 
 app.delete('/api/notes/:id', (req, res) => {
-    readFromFile('./db/db.json').then((data) => {
-        let id = req.params.id;
-        let dbArray = JSON.parse(data)
-        dbArray = dbArray.filter(obj => obj.id !== id)
-        writeToFile('./db/db.json', dbArray)
-    })
+    let id = req.params.id
+    if (id){
+        
+        readFromFile('./db/db.json').then((data) => {
+            console.log(req.params)
+            let dbArray = JSON.parse(data)
+            if (dbArray){
+                dbArray = dbArray.filter(obj => obj.id !== id)
+                writeToFile('./db/db.json', dbArray)
+            }
+        })
+        res.send(`Deleted Note`)
+    }else{
+        res.send(`Error Deleting Note!`)
+    }
 })
 
 app.listen(PORT, () =>
