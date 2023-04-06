@@ -1,6 +1,6 @@
 const express = require('express')
 const PATH = require('path')
-const { readFromFile, readAndAppend } = require('./helpers/fsUtils');
+const { readFromFile, readAndAppend, writeToFile } = require('./helpers/fsUtils');
 const uuid = require('./helpers/uuid')
 const app =express()
 const PORT = process.env.PORT || 3001
@@ -24,7 +24,12 @@ app.post('/api/notes', (req, res) => {
 })
 
 app.delete('/api/notes/:id', (req, res) => {
-    readFromFile('./db/db.json').then((data) => console.log(JSON.parse(data)))
+    readFromFile('./db/db.json').then((data) => {
+        let id = req.params.id;
+        let dbArray = JSON.parse(data)
+        dbArray = dbArray.filter(obj => obj.id !== id)
+        writeToFile('./db/db.json', dbArray)
+    })
 })
 
 app.listen(PORT, () =>
