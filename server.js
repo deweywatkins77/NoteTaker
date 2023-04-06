@@ -17,10 +17,11 @@ app.get('/api/notes', (req, res) => {
     readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
 })
 
-app.post('/api/notes', (req, res) => {
+app.post('/api/notes', (req, res, next) => {
     let newNote = req.body
     newNote.id = uuid()
     readAndAppend(newNote, './db/db.json')
+    next()
 })
 
 app.delete('/api/notes/:id', (req, res) => {

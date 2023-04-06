@@ -33,14 +33,17 @@ const getNotes = () =>
     },
   });
 
-const saveNote = (note) =>
+const saveNote = (note) => {
   fetch('/api/notes', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(note),
-  });
+  })
+  .then(() => getAndRenderNotes())
+  .then(() =>renderActiveNote())
+}
 
 const deleteNote = (id) =>
   fetch(`/api/notes/${id}`, {
@@ -71,10 +74,7 @@ const handleNoteSave = () => {
     title: noteTitle.value,
     text: noteText.value,
   };
-  saveNote(newNote).then(() => {
-    getAndRenderNotes();
-    renderActiveNote();
-  });
+  saveNote(newNote)
 };
 
 // Delete the clicked note
