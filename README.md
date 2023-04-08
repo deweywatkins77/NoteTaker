@@ -3,7 +3,7 @@
 
 ## Description
 
-Web app allows users to create notes. Each note has a title. When clicking on a note title on the left that note will be presented on the right. notes are saved to the server in a json file. Clicking on the trash can icon will delete that note.
+Web app allows users to create notes, save notes, and delete them.
 
 ## Table of Contents 
 
@@ -29,6 +29,8 @@ npm i
 
 ## Usage
 
+Web app allows users to create notes. Each note has a title. When clicking on a note title on the left that note will be presented on the right. notes are saved to the server in a json file. Clicking on the trash can icon will delete that note.
+
 nodemon and express are required modules. 
 
 ## License
@@ -43,9 +45,7 @@ For contributions please email me at deweywatkins77@gmail.com
 
 To run tests, run the following command:
 
-```
 no tests for this project
-```
 
 ## Questions
 
